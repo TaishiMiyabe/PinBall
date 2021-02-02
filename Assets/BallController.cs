@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;//using UnityEngineではカバーできない？例えばGameObjectクラスはUnityEngine.GameObject...using UnityEngineしてるから、GameObjectでいいという認識。
+using UnityEngine.UI;
 
 public class BallController : MonoBehaviour
 {
@@ -11,7 +11,18 @@ public class BallController : MonoBehaviour
     //gameoverを表示するテキスト
     private GameObject gameoverText;
 
+    //Scoreを表示するテキスト
+    private GameObject ScoreText;
+    private int GameScore;
+
+    //gameoverTextの透明度
     private float clearColor;
+
+    //ボールがぶつかるオブジェクトごとのスコア
+    private int smallCloudScore = 100;
+    private int largeCloudScore = 300;
+    private int smallStarScore = 50;
+    private int largeStarScore = 200;
     
 
     // Start is called before the first frame update
@@ -20,10 +31,12 @@ public class BallController : MonoBehaviour
         clearColor = 1.0f;
         this.gameoverText = GameObject.Find("GameOverText");
         this.gameoverText.GetComponent<Text>().color = new Color(1, 1, 1, clearColor);
-        //while (clearColor>0) {
-        //    clearColor -= 0.1f;
-        //    this.gameoverText.GetComponent<Text>().color = new Color(1, 1, 1, clearColor);
-        //}
+
+        //Scoreテキストを取得
+        this.ScoreText = GameObject.Find("Score");
+        GameScore = 0;
+        this.ScoreText.GetComponent<Text>().text = $"Score: {GameScore}";
+
     }
 
     // Update is called once per frame
@@ -40,9 +53,32 @@ public class BallController : MonoBehaviour
             if (clearColor > 0.0f)//ゲーム開始直後にtextを表示して、徐々に透明にしてみたかった。
             {
                 clearColor -= 0.01f;
-                this.gameoverText.GetComponent<Text>().color = new Color(1, 1, 1, clearColor);//これが必須。無しで42行目onlyだとテキストが消えていかない。…が、どう理解したらいい？
+                this.gameoverText.GetComponent<Text>().color = new Color(1, 1, 1, clearColor);//これが必須。無しで42行目onlyだとテキストが消えていかない。
 
             }
         }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "SmallStarTag")
+        {
+            GameScore += smallStarScore;
+        }
+        else if(other.gameObject.tag == "LargeStarTag")
+        {
+            GameScore += largeStarScore;
+        }
+        else if(other.gameObject.tag == "SmallCloudTag")
+        {
+            GameScore += smallCloudScore;
+        }
+        else if(other.gameObject.tag == "LargeCloudTag")
+        {
+            GameScore += largeCloudScore;
+        }
+
+        //衝突点数加算後に、得点表示を更新
+        this.ScoreText.GetComponent<Text>().text = $"Score: {GameScore}";
     }
 }
