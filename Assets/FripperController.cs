@@ -58,7 +58,7 @@ public class FripperController : MonoBehaviour
         }
         
         //発展②
-        if(Input.touchCount > 0)
+        if(Input.touchCount > 0)//タッチされているならば
         {
             //Touch構造体をゲットする
             Touch touch = Input.GetTouch(0);
@@ -69,7 +69,7 @@ public class FripperController : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    SetAngle(this.flickAngle);
+                    SetAngle(this.defaultAngle);
                 }
             }
 
@@ -79,7 +79,7 @@ public class FripperController : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    SetAngle(this.flickAngle);
+                    SetAngle(this.defaultAngle);
                 }
             }
 
