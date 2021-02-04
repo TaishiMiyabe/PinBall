@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+//障害物オブジェクトすべてにアタッチしていたこのスクリプトに関しては、最終的に使わないことに。無念。
 public class ScoreCalculator : MonoBehaviour
 {
 
