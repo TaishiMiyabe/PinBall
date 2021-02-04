@@ -8,7 +8,7 @@ public class BrightnessRegulator : MonoBehaviour
 
     private float minEmission = 0.3f;
 
-    private float magEmission = 2.0f;//magEmission をセットする意味is何？数字ポン置きじゃダメ？
+    private float magEmission = 2.0f;
 
     private int degree = 0;
 
